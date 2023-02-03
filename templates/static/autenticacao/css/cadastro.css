@@ -1,3 +1,4 @@
+
 .sidebar{
     background-color: #27DB8F;
     height: 100vh;
@@ -16,7 +17,7 @@
 
 .sidebar{
 
-    background-image: url();
+    background-image: url("/static/autenticacao/img/fundo_background.png");
 
 }
 
