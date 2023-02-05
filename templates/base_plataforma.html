@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
-                <a href="{% url 'pacientes' %}" class="link-lateral">
+                <a href="{% url 'pacientes' %}" class="link-lateral">{% csrf_token %}
                     <div class="card-lateral">
                         <img src="{% static 'plataforma/img/paciente.png' %}">
                         <br>
@@ -44,7 +44,7 @@
 
             <div class="col-md-8">
                 {% block 'plataforma' %}
-
+    
 
                 {% endblock %}
             </div>
