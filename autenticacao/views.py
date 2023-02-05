@@ -12,9 +12,10 @@ from .models import Ativacao
 from hashlib import sha256
 
 
-
 def cadastro(request):
-    if request.method == "GET":
+    if request.user.is_authenticated:
+        return redirect('/')        
+    elif request.method == "GET":
         return render(request, 'cadastro.html')   
     elif request.method == "POST":        
         username = request.POST.get('usuario')
@@ -50,7 +51,9 @@ def cadastro(request):
             return redirect('/auth/cadastro')
 
 def logar(request):
-    if request.method == "GET":
+    if request.user.is_authenticated:
+        return redirect('/')  
+    elif request.method == "GET":
         return render(request, 'logar.html')
     elif request.method == "POST":
         username = request.POST.get('usuario')
