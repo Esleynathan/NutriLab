@@ -1,10 +1,11 @@
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
 from .models import Pacientes, DadosPaciente
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='/auth/logar/')
 def pacientes(request):
@@ -56,9 +57,6 @@ def dados_paciente_listar(request):
 
 @login_required(login_url='/auth/logar/')
 def dados_paciente(request, id):
-    return HttpResponse(id)
-
-def dados_paciente(request, id):
     paciente = get_object_or_404(Pacientes, id=id)
     if not paciente.nutri == request.user:
         messages.add_message(request, constants.ERROR, 'Esse paciente não é seu')
@@ -100,3 +98,15 @@ def dados_paciente(request, id):
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
             return redirect(f'/dados_paciente/{id}')
+
+@login_required(login_url='/auth/logar/')
+@csrf_exempt
+def grafico_peso(request, id):
+    paciente = Pacientes.objects.get(id=id)
+    dados = DadosPaciente.objects.filter(paciente=paciente).order_by("data")
+    
+    pesos = [dado.peso for dado in dados]
+    labels = list(range(len(pesos)))
+    data = {'peso': pesos,
+            'labels': labels}
+    return JsonResponse(data)
