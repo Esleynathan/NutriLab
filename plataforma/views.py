@@ -1,9 +1,10 @@
+from datetime import datetime
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Pacientes
+from .models import Pacientes, DadosPaciente
 
 @login_required(login_url='/auth/logar/')
 def pacientes(request):
@@ -64,7 +65,8 @@ def dados_paciente(request, id):
         return redirect('/dados_paciente/')
         
     if request.method == "GET":
-        return render(request, 'dados_paciente.html', {'paciente': paciente})         
+        dados_paciente = DadosPaciente.objects.filter(paciente=paciente)
+        return render(request, 'dados_paciente.html', {'paciente': paciente, 'dados_paciente': dados_paciente})         
     elif request.method == "POST":
         peso = request.POST.get('peso')
         altura = request.POST.get('altura')
@@ -76,5 +78,25 @@ def dados_paciente(request, id):
         colesterol_total = request.POST.get('ctotal')
         triglicerídios = request.POST.get('triglicerídios')
 
+        if not peso.isnumeric () or not altura.isnumeric () or not gordura.isnumeric () or not musculo.isnumeric () or not hdl.isnumeric () or not ldl.isnumeric () or not colesterol_total.isnumeric () or not triglicerídios.isnumeric ():
+            messages.add_message(request, constants.ERROR, 'Preencha todos os campos')
+            return redirect(f'/dados_paciente/{id}')
 
-        return redirect('/dados_paciente/')       
+        try:
+            paciente = DadosPaciente(paciente=paciente,
+                                    data=datetime.now(),
+                                    peso=peso,
+                                    altura=altura,
+                                    percentual_gordura=gordura,
+                                    percentual_musculo=musculo,
+                                    colesterol_hdl=hdl,
+                                    colesterol_ldl=ldl,
+                                    colesterol_total=colesterol_total,
+                                    trigliceridios=triglicerídios)
+
+            paciente.save()
+            messages.add_message(request, constants.SUCCESS, 'Dados cadastrado com sucesso')
+            return redirect(f'/dados_paciente/')
+        except:
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect(f'/dados_paciente/{id}')

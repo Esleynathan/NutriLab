@@ -16,7 +16,11 @@
     <div class="row">
 
         <div class="col-md-3">
+        {% if paciente.sexo == "M"%}
+            <img src="{% static 'plataforma/img/perfil2.png' %}">
+        {% else %}
             <img src="{% static 'plataforma/img/perfil1.png' %}">
+        {% endif %}
         </div>
 
         <div class="col-md-3 dados descricao">
@@ -43,12 +47,16 @@
             </tr>
         </thead>
         <tbody>
+           
+            {% for dado in dados_paciente %}
             <tr>
-                <th scope="row">58 Kg</th>
-                <td>173 cm</td>
-                <td>19%</td>
-                <td>25%</td>
+                <th scope="row">{{dado.peso}} Kg</th>
+                <td>{{dado.altura}} cm</td>
+                <td>{{dado.percentual_gordura}} %</td>
+                <td>{{dado.percentual_musculo}} %</td>
             </tr>
+            {% endfor%}
+            
             
         </tbody>
     </table>
