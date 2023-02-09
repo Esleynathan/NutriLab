@@ -93,11 +93,11 @@
                     
                         <h4 class="titulo">Adicionar refeição</h4>
 
-                        <button type="button" class="btn btn-outline-success">
+                        <button type="button" onclick="exibe_refeicao()" class="btn btn-outline-success">
                             + Nova refeição
                         </button>
 
-                        <button style="margin-left: 10px;" type="button" class="btn btn-outline-success" >
+                        <button style="margin-left: 10px;" type="button" onclick="exibe_opcao()"class="btn btn-outline-success" >
                             + Nova opção
                         </button>
                         <br>
@@ -189,5 +189,24 @@
         </div>
     </div>
 
+<script>
+    function exibe_refeicao(){
+        const form_refeicao = document.getElementById('form-refeicao')
+        const form_opcao = document.getElementById('form-opcao')
+
+        form_refeicao.style.display = "block"
+        form_opcao.style.display = "none"
+
+    }
+
+    function exibe_opcao(){
+        const form_refeicao = document.getElementById('form-refeicao')
+        const form_opcao = document.getElementById('form-opcao')
+
+        form_refeicao.style.display = "none"
+        form_opcao.style.display = "block"
+
+    }
+</script>
 
 {% endblock%}
