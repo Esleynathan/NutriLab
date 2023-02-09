@@ -110,3 +110,8 @@ def grafico_peso(request, id):
     data = {'peso': pesos,
             'labels': labels}
     return JsonResponse(data)
+
+def plano_alimentar_listar(request):
+    if request.method == "GET":
+        pacientes = Pacientes.objects.filter(nutri=request.user)
+        return render(request, 'plano_alimentar_listar.html', {'pacientes': pacientes})
