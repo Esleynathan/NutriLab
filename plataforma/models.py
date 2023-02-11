@@ -40,7 +40,6 @@ class Refeicao(models.Model):
     def __str__(self):
         return self.titulo
 
-
 class Opcao(models.Model):
     refeicao = models.ForeignKey(Refeicao, on_delete=models.CASCADE)
     imagem = models.ImageField(upload_to="opcao")

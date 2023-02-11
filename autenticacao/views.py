@@ -14,7 +14,7 @@ from hashlib import sha256
 
 def cadastro(request):
     if request.user.is_authenticated:
-        return redirect('/')        
+        return redirect('/pacientes/')        
     elif request.method == "GET":
         return render(request, 'cadastro.html')   
     elif request.method == "POST":        
@@ -52,7 +52,7 @@ def cadastro(request):
 
 def logar(request):
     if request.user.is_authenticated:
-        return redirect('/')  
+        return redirect('/pacientes/')  
     elif request.method == "GET":
         return render(request, 'logar.html')
     elif request.method == "POST":
