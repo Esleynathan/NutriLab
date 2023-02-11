@@ -94,7 +94,7 @@ def dados_paciente(request, id):
 
             paciente.save()
             messages.add_message(request, constants.SUCCESS, 'Dados cadastrado com sucesso')
-            return redirect(f'/dados_paciente/')
+            return redirect(f'/dados_paciente/{id}')
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
             return redirect(f'/dados_paciente/{id}')
