@@ -1,0 +1,20 @@
+{% extends 'base_plataforma.html' %}
+{% load static %}
+
+{% block 'plataforma' %}
+
+{% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{message.tags}}">
+                {{message}}
+            </div>
+        {% endfor %}
+{% endif %}
+    <br>
+    <br>
+    <div  class="row">
+        <h3> Você esta na pagina home </h3>
+    </div>
+
+{% endblock%}
